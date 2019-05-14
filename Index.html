@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<meta charset="UTF-8">
+<html lang="en">
+    <head>
+        <title>Super Mario Bros.</title>
+    </head>
+    <body onload="InitializeWebGL()">
+        <canvas id="canvas" width="1280px" height="720px">
+            This message is displayed if your browser doesn't support the HTML5 'Canvas' element.
+        </canvas>
+
+		<script src="Scripts/WebGL/Initialialize.js"></script>
+        <script src="Scripts/GameLogic/Gravity.js"></script>
+        <script src="Scripts/GameLogic/Player.js"></script>
+        <script src="Scripts/Main.js"></script>
+
+		<!-- All references to the Shaders -->
+		<div id="shaders">
+			<script id="vertex_shader" type="glsl" src="Scripts/WebGL/VertexShader.glsl"></script>
+			<script id="fragment_shader" type="glsl" src="Scripts/WebGL/FragmentShader.glsl"></script>
+		</div>
+    </body>
+</html>
