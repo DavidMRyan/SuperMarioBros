@@ -1,14 +1,53 @@
-function main()
+/**
+ * [Insert Prologue Block Here]
+ */
+
+var player = new Player(), count = 4;
+const A = 65, D = 68, SPACE = 32;
+var deltaTime, lastFrame;
+
+
+/**
+ * Initializes some things before calling GameLoop or starting the main menu
+ */
+function Main()
 {
-	// TODO: Fix this 5/14/2019
-	// ########################
-	// let vertexShader = document.getElementById("vertex_shader"),
-	// 	fragmentShader = document.getElementById("fragment_shader");
-	// let program = InitializeShader(gl, vertexShader, fragmentShader);
-	//
-	// // Force WebGL to use the Shaders that we pass using InitializeShader();
-	// gl.useProgram(program);
-	//
-	// // Draw a point to test, using our shader program.
-	// gl.drawArrays(gl.POINT, 0, 1);
+    window.setInterval("GameLoop()", 1000 / 15);
+
+    // Game Setup
+    Util.InitializeImageArray();
+    player.SetSize("large");        // For testing!!!
+    Physics.SetGravity(-2);
+    Physics.SetVelocity(2);
+
+
+    // Event Listeners
+    window.addEventListener("keydown", (key) => {
+        switch(key.keyCode)
+		{
+			case A: player.Move("LEFT"); 	break;
+			case D: player.Move("RIGHT"); 	break;
+			case SPACE: player.Jump();      break;
+		}
+    });
+}
+
+/**
+ * Runs the game portion of the program
+ */
+function GameLoop()
+{
+    // Keep track of Delta Time, for use in the gravity.
+    deltaTime = (new Date().getTime() - lastFrame);
+    if(deltaTime > 0.15) deltaTime = 0.15;
+
+    Canvas.Draw(0, 0, canvas.width, canvas.height, "rgb(91, 134, 251)");                    // Fill the background (Just the color)
+    player.size == "small" ? player.Draw(images[0][count]) : player.Draw(images[1][count]); // Set the size of the player
+
+    // Animate the character sprites
+    count++;
+    if(count > 7) count = 4;
+
+    // Keep track of the last frame that was executed, to use in Delta Time
+    lastFrame = new Date().getTime();
 }

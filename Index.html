@@ -4,20 +4,39 @@
     <head>
         <title>Super Mario Bros.</title>
     </head>
-    <body onload="InitializeWebGL()">
+    <body onload="Main()">
         <canvas id="canvas" width="1280px" height="720px">
             This message is displayed if your browser doesn't support the HTML5 'Canvas' element.
         </canvas>
 
-		<script src="Scripts/WebGL/Initialialize.js"></script>
-        <script src="Scripts/GameLogic/Gravity.js"></script>
+        <div id="images">
+            <!-- Small Mario -->
+            <div id="small_mario">
+                <img id="Mario" src="Assets/Images/Characters/Mario/Small/Mario.png" style="display: none;">
+                <img id="MarioClimb" src="Assets/Images/Characters/Mario/Small/MarioClimb.png" style="display: none;">
+                <img id="MarioDead" src="Assets/Images/Characters/Mario/Small/MarioDead.png" style="display: none;">
+                <img id="MarioJump" src="Assets/Images/Characters/Mario/Small/MarioJump.png" style="display: none;">
+                <img id="MarioWalk01" src="Assets/Images/Characters/Mario/Small/MarioWalk_01.png" style="display: none;">
+                <img id="MarioWalk02" src="Assets/Images/Characters/Mario/Small/MarioWalk_02.png" style="display: none;">
+                <img id="MarioWalk03" src="Assets/Images/Characters/Mario/Small/MarioWalk_03.png" style="display: none;">
+                <img id="MarioWalk04" src="Assets/Images/Characters/Mario/Small/MarioWalk_04.png" style="display: none;">
+            </div>
+
+            <!-- Large Mario -->
+            <div id="large_mario">
+                <img id="Mario" src="Assets/Images/Characters/Mario/Large/Mario.png" style="display: none;">
+                <img id="MarioClimb" src="Assets/Images/Characters/Mario/Large/MarioClimb.png" style="display: none;">
+                <img id="MarioDead" src="Assets/Images/Characters/Mario/Large/MarioDuck.png" style="display: none;">
+                <img id="MarioJump" src="Assets/Images/Characters/Mario/Large/MarioJump.png" style="display: none;">
+                <img id="MarioWalk01" src="Assets/Images/Characters/Mario/Large/MarioWalk_01.png" style="display: none;">
+                <img id="MarioWalk02" src="Assets/Images/Characters/Mario/Large/MarioWalk_02.png" style="display: none;">
+                <img id="MarioWalk03" src="Assets/Images/Characters/Mario/Large/MarioWalk_03.png" style="display: none;">
+                <img id="MarioWalk04" src="Assets/Images/Characters/Mario/Large/MarioWalk_04.png" style="display: none;">
+            </div>
+        </div>
+
+        <script src="Scripts/Util.js"></script>
         <script src="Scripts/GameLogic/Player.js"></script>
         <script src="Scripts/Main.js"></script>
-
-		<!-- All references to the Shaders -->
-		<div id="shaders">
-			<script id="vertex_shader" type="glsl" src="Scripts/WebGL/VertexShader.glsl"></script>
-			<script id="fragment_shader" type="glsl" src="Scripts/WebGL/FragmentShader.glsl"></script>
-		</div>
     </body>
 </html>
