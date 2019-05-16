@@ -2,7 +2,7 @@
  * [Insert Prologue Block Here]
  */
 
-var player = new Player(), count = 4;
+var player = new Player(), count = 4, frameCounter = 0;
 const A = 65, D = 68, SPACE = 32;
 var deltaTime, lastFrame;
 
@@ -12,11 +12,11 @@ var deltaTime, lastFrame;
  */
 function Main()
 {
-    window.setInterval("GameLoop()", 1000 / 15);
+    window.setInterval("GameLoop()", 1000 / 60);
 
     // Game Setup
     Util.InitializeImageArray();
-    player.SetSize("large");        // For testing!!!
+    player.SetSize("large");
     Physics.SetGravity(-2);
     Physics.SetVelocity(2);
 
@@ -45,7 +45,8 @@ function GameLoop()
     player.size == "small" ? player.Draw(images[0][count]) : player.Draw(images[1][count]); // Set the size of the player
 
     // Animate the character sprites
-    count++;
+    frameCounter++;
+    if(frameCounter % 5 == 0) count++; // Increment the current image to draw every 5 frames
     if(count > 7) count = 4;
 
     // Keep track of the last frame that was executed, to use in Delta Time

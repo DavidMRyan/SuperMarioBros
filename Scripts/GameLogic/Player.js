@@ -39,7 +39,7 @@ class Player
 
     /**
      * Handles the player jumping, using proper gravity and velocity
-     * STILL WIP as of 5/14/2019
+     * Still WIP as of 5/14/2019
      * TODO: Finish this
      */
     Jump()
