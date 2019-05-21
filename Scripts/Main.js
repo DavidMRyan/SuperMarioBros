@@ -57,24 +57,7 @@ function GameLoop()
     // if(deltaTime > 0.15) deltaTime = 0.15;
 
     Canvas.Draw(0, 0, canvas.width, canvas.height, "rgb(91, 134, 251)"); // Fill the background (Just the color)
-    
-    if(isIdle && !mirrorImage) 
-        player.size == "small" ? player.Draw(images[0][0], false) : player.Draw(images[1][0], false);
-
-    else if(isIdle && mirrorImage)
-        player.size == "small" ? player.Draw(images[0][0], true) : player.Draw(images[1][0], true);
-
-    else if(!isIdle && !mirrorImage)
-        player.size == "small" ? player.Draw(images[0][count], false) : player.Draw(images[1][count], false);
-
-    else if(!isIdle && mirrorImage)
-        player.size == "small" ? player.Draw(images[0][count], true) : player.Draw(images[1][count], true);
-        
-    else
-        console.log("An error has occured in drawing the player sprite!");
-
-    // if(isIdle && mirrorImage) player.size == "small" ? player.Draw(images[0][0]) : player.Draw(images[1][0]);
-    // else player.size == "small" ? player.Draw(images[0][count]) : player.Draw(images[1][count]);
+    player.Animate();
 
     // Animate the character sprites
     frameCounter++;

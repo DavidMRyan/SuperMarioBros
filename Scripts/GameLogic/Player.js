@@ -18,22 +18,25 @@ class Player
         c.save();
         c.beginPath();
         c.translate(this.x + image.width / 2, this.y + image.height / 2);
-        if(isMirrored)
-        {
-            c.scale(-1, 1);
-            c.drawImage(image, -image.width / 2, -image.height / 2, image.width, image.height);
-        }
-
-        else
-        {
-            c.scale(1, 1);
-            c.drawImage(image, -image.width / 2, -image.height / 2, image.width, image.height);
-        }
+        if(isMirrored) { c.scale(-1, 1); c.drawImage(image, -image.width / 2, -image.height / 2, image.width, image.height); }
+        else { c.scale(1, 1); c.drawImage(image, -image.width / 2, -image.height / 2, image.width, image.height); }
         c.closePath();
         c.restore();
 
-        console.log(`(${this.x},${this.y})`); // Debug the character's position
-        console.log(`Mirror Status: ${isMirrored}`);
+        // console.log(`Player Position: (${this.x},${this.y})`); // Debug the character's position
+        // console.log(`Mirror Status: ${isMirrored}`); // Debug the boolean value of argument 'isMirrored'
+    }
+
+    /**
+     * Handles the player animation in this function in order to keep the main file clean.
+     */
+    Animate()
+    {
+        if(isIdle && !mirrorImage) this.size == "small" ? player.Draw(images[0][0], false) : player.Draw(images[1][0], false);
+        else if(isIdle && mirrorImage) this.size == "small" ? player.Draw(images[0][0], true) : player.Draw(images[1][0], true);
+        else if(!isIdle && !mirrorImage) this.size == "small" ? player.Draw(images[0][count], false) : player.Draw(images[1][count], false);
+        else if(!isIdle && mirrorImage) this.size == "small" ? player.Draw(images[0][count], true) : player.Draw(images[1][count], true); 
+        else console.log("An error has occured in drawing the player sprite!");
     }
 
     /**
