@@ -11,16 +11,29 @@ class Player
     /**
      * Draws the player onto the canvas using a specified image file
      * @param image - The image of the player to be used as the character sprite
-     * @param x - The X position of the image
-     * @param y - The Y position of the image
+     * @param isMirrored - Boolean value indicating whether or not the image is supposed to be mirrored horizontally.
      */
-    Draw(image)
+    Draw(image, isMirrored)
     {
+        c.save();
         c.beginPath();
-        c.drawImage(image, this.x, this.y, image.width, image.height);
+        c.translate(this.x + image.width / 2, this.y + image.height / 2);
+        if(isMirrored)
+        {
+            c.scale(-1, 1);
+            c.drawImage(image, -image.width / 2, -image.height / 2, image.width, image.height);
+        }
+
+        else
+        {
+            c.scale(1, 1);
+            c.drawImage(image, -image.width / 2, -image.height / 2, image.width, image.height);
+        }
         c.closePath();
+        c.restore();
 
         console.log(`(${this.x},${this.y})`); // Debug the character's position
+        console.log(`Mirror Status: ${isMirrored}`);
     }
 
     /**

@@ -2,7 +2,7 @@
  * [Insert Prologue Block Here]
  */
 
-var player = new Player(), count = 4, frameCounter = 0;
+var player = new Player(), count = 4, frameCounter = 0, isIdle = true, mirrorImage = false;
 const A = 65, D = 68, SPACE = 32;
 var deltaTime, lastFrame;
 
@@ -17,19 +17,34 @@ function Main()
     // Game Setup
     Util.InitializeImageArray();
     player.SetSize("large");
-    Physics.SetGravity(-2);
-    Physics.SetVelocity(2);
+    // Physics.SetGravity(-2);
+    // Physics.SetVelocity(2);
 
 
     // Event Listeners
     window.addEventListener("keydown", (key) => {
         switch(key.keyCode)
 		{
-			case A: player.Move("LEFT"); 	break;
-			case D: player.Move("RIGHT"); 	break;
-			case SPACE: player.Jump();      break;
+            case A:
+                player.Move("LEFT");
+                isIdle = false;
+                mirrorImage = true;
+                break;
+
+            case D:
+                player.Move("RIGHT");
+                isIdle = false;
+                mirrorImage = false;
+                break;
+
+            case SPACE:
+                // Add Jumping Later
+                // player.Jump();
+                break;
 		}
     });
+
+    window.addEventListener("keyup", (key) => { isIdle = true; });
 }
 
 /**
@@ -38,11 +53,28 @@ function Main()
 function GameLoop()
 {
     // Keep track of Delta Time, for use in the gravity.
-    deltaTime = (new Date().getTime() - lastFrame);
-    if(deltaTime > 0.15) deltaTime = 0.15;
+    // deltaTime = (new Date().getTime() - lastFrame);
+    // if(deltaTime > 0.15) deltaTime = 0.15;
 
-    Canvas.Draw(0, 0, canvas.width, canvas.height, "rgb(91, 134, 251)");                    // Fill the background (Just the color)
-    player.size == "small" ? player.Draw(images[0][count]) : player.Draw(images[1][count]); // Set the size of the player
+    Canvas.Draw(0, 0, canvas.width, canvas.height, "rgb(91, 134, 251)"); // Fill the background (Just the color)
+    
+    if(isIdle && !mirrorImage) 
+        player.size == "small" ? player.Draw(images[0][0], false) : player.Draw(images[1][0], false);
+
+    else if(isIdle && mirrorImage)
+        player.size == "small" ? player.Draw(images[0][0], true) : player.Draw(images[1][0], true);
+
+    else if(!isIdle && !mirrorImage)
+        player.size == "small" ? player.Draw(images[0][count], false) : player.Draw(images[1][count], false);
+
+    else if(!isIdle && mirrorImage)
+        player.size == "small" ? player.Draw(images[0][count], true) : player.Draw(images[1][count], true);
+        
+    else
+        console.log("An error has occured in drawing the player sprite!");
+
+    // if(isIdle && mirrorImage) player.size == "small" ? player.Draw(images[0][0]) : player.Draw(images[1][0]);
+    // else player.size == "small" ? player.Draw(images[0][count]) : player.Draw(images[1][count]);
 
     // Animate the character sprites
     frameCounter++;
@@ -50,5 +82,5 @@ function GameLoop()
     if(count > 7) count = 4;
 
     // Keep track of the last frame that was executed, to use in Delta Time
-    lastFrame = new Date().getTime();
+    // lastFrame = new Date().getTime();
 }
