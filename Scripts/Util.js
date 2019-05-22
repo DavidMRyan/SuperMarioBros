@@ -61,3 +61,29 @@ class Physics
 	static GetGravity() { return gravity; }
 	static GetVelocity() { return velocity; }
 }
+
+var background = document.getElementById("background");
+
+class Background
+{
+	/**
+	 * Draws the background, and sets the transform of the canvas matrix
+	 * for use in the 'Player.Draw()' function.
+	 */
+	static Draw()
+	{
+		let zoom = 3.14; // 'Camera zoom' for the background image drawn on the canvas
+
+		 // Draw the background with the proper zoom
+		c.beginPath();
+		c.drawImage(background, 0, 0, background.width * zoom, background.height * zoom);
+		c.closePath();
+
+		// Center matrix to mario
+		canvasMatrix.SetTransform(canvasMatrix.m11, canvasMatrix.m12, canvasMatrix.m21, canvasMatrix.m22,
+			-player.x + canvas.width / 2, canvasMatrix.dy);
+			
+		c.setTransform(canvasMatrix.m11, canvasMatrix.m12, canvasMatrix.m21, canvasMatrix.m22,
+			-player.x + canvas.width / 2, canvasMatrix.dy);
+	}
+}

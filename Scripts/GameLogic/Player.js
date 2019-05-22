@@ -3,7 +3,7 @@ class Player
     constructor()
     {
         this.x = canvas.width / 2;
-        this.y = canvas.height - 72;
+        this.y = canvas.height - 230;
         this.speed = 7;
         this.size = "small";
     }
@@ -17,9 +17,34 @@ class Player
     {
         c.save();
         c.beginPath();
-        c.translate(this.x + image.width / 2, this.y + image.height / 2);
-        if(isMirrored) { c.scale(-1, 1); c.drawImage(image, -image.width / 2, -image.height / 2, image.width, image.height); }
-        else { c.scale(1, 1); c.drawImage(image, -image.width / 2, -image.height / 2, image.width, image.height); }
+
+        // Temporary Matrix
+        var mat = new Matrix3x2(canvasMatrix.m11, canvasMatrix.m12, canvasMatrix.m21, canvasMatrix.m22,
+            canvasMatrix.dx, canvasMatrix.dy);
+
+        /** 
+         * Creates a temporary matrix representing the current canvas matrix
+         * and change the scale and translation to mirror the image
+         */
+        if(isMirrored) 
+        {
+            mat.SetTranslation(mat.dx + image.width / 2, mat.dy + image.height / 2);
+            mat.SetScale(-mat.m11, mat.m22);
+            c.setTransform(mat.m11, mat.m12, mat.m21, mat.m22, mat.dx, mat.dy);
+            c.drawImage(image, -this.x, this.y - image.height / 2, image.width * 1.3, image.height * 1.3);
+            c.setTransform(canvasMatrix.m11, canvasMatrix.m12, canvasMatrix.m21, canvasMatrix.m22,
+                canvasMatrix.dx, canvasMatrix.dy);
+        }
+
+        else
+        {
+            mat.SetScale(mat.m11, mat.m22); 
+            c.setTransform(mat.m11, mat.m12, mat.m21, mat.m22, mat.dx, mat.dy);
+            c.drawImage(image, this.x - image.width / 2, this.y, image.width * 1.3, image.height * 1.3);
+            c.setTransform(canvasMatrix.m11, canvasMatrix.m12, canvasMatrix.m21, canvasMatrix.m22,
+                canvasMatrix.dx, canvasMatrix.dy);
+        }
+
         c.closePath();
         c.restore();
 

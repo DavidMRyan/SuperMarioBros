@@ -1,11 +1,10 @@
 /**
  * [Insert Prologue Block Here]
  */
-
 var player = new Player(), count = 4, frameCounter = 0, isIdle = true, mirrorImage = false;
 const A = 65, D = 68, SPACE = 32;
 var deltaTime, lastFrame;
-
+var canvasMatrix = matrixIdentity;
 
 /**
  * Initializes some things before calling GameLoop or starting the main menu
@@ -17,8 +16,7 @@ function Main()
     // Game Setup
     Util.InitializeImageArray();
     player.SetSize("large");
-    // Physics.SetGravity(-2);
-    // Physics.SetVelocity(2);
+    Sound.PlayMusic("1-1", true); // Play level 1-1 music
 
 
     // Event Listeners
@@ -52,18 +50,11 @@ function Main()
  */
 function GameLoop()
 {
-    // Keep track of Delta Time, for use in the gravity.
-    // deltaTime = (new Date().getTime() - lastFrame);
-    // if(deltaTime > 0.15) deltaTime = 0.15;
-
-    Canvas.Draw(0, 0, canvas.width, canvas.height, "rgb(91, 134, 251)"); // Fill the background (Just the color)
+    Background.Draw();
     player.Animate();
 
     // Animate the character sprites
     frameCounter++;
     if(frameCounter % 5 == 0) count++; // Increment the current image to draw every 5 frames
     if(count > 7) count = 4;
-
-    // Keep track of the last frame that was executed, to use in Delta Time
-    // lastFrame = new Date().getTime();
 }

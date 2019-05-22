@@ -5,11 +5,14 @@
         <title>Super Mario Bros.</title>
     </head>
     <body onload="Main()">
-        <canvas id="canvas" width="1280px" height="720px">
+        <canvas id="canvas" width="1024px" height="800px">
             This message is displayed if your browser doesn't support the HTML5 'Canvas' element.
         </canvas>
 
         <div id="images">
+            <!-- Background -->
+            <img id="background" src="Assets/Images/Levels/1-1.png" style="display: none;">
+
             <!-- Small Mario -->
             <div id="small_mario">
                 <img id="Mario" src="Assets/Images/Characters/Mario/Small/Mario.png" style="display: none;">
@@ -36,6 +39,8 @@
         </div>
 
         <script src="Scripts/Util.js"></script>
+        <script src="Scripts/Matrix.js"></script>
+        <script src="Scripts/Sound.js"></script>
         <script src="Scripts/GameLogic/Player.js"></script>
         <script src="Scripts/Main.js"></script>
     </body>
