@@ -1,9 +1,10 @@
 /**
  * [Insert Prologue Block Here]
  */
-var player = new Player(), count = 4, frameCounter = 0, isIdle = true, mirrorImage = false;
+var player = new Player(), count = 4, frameCounter = 0,
+    isIdle = true, mirrorImage = false,
+    isJumping = false, isOnGround = true;
 const A = 65, D = 68, SPACE = 32;
-var deltaTime, lastFrame;
 var canvasMatrix = matrixIdentity;
 
 /**
@@ -16,8 +17,7 @@ function Main()
     // Game Setup
     Util.InitializeImageArray();
     player.SetSize("large");
-    Sound.PlayMusic("1-1", true); // Play level 1-1 music
-
+    Sound.PlayMusic("1-1", true);
 
     // Event Listeners
     window.addEventListener("keydown", (key) => {
@@ -27,22 +27,35 @@ function Main()
                 player.Move("LEFT");
                 isIdle = false;
                 mirrorImage = true;
+                player.animationStatus = "moving_mirrored";
                 break;
 
             case D:
                 player.Move("RIGHT");
                 isIdle = false;
                 mirrorImage = false;
+                player.animationStatus = "moving";
                 break;
 
             case SPACE:
-                // Add Jumping Later
-                // player.Jump();
+                if(isOnGround)
+                {
+                    player.velocity.y = -14.0;
+                    player.Jump();
+                    isOnGround = false;
+                    mirrorImage ? player.animationStatus = "jumping_mirrored" : player.animationStatus = "jumping"
+                }
+                // Debug if the player is on the ground.
+                // else console.log(`Cannot Jump! Player is already jumping!`);
                 break;
 		}
     });
 
-    window.addEventListener("keyup", (key) => { isIdle = true; });
+    window.addEventListener("keyup", (key) => {
+        isIdle = true;
+        if(isOnGround)
+            mirrorImage ? player.animationStatus = "idle_mirrored" : player.animationStatus = "idle";
+    });
 }
 
 /**
@@ -51,7 +64,14 @@ function Main()
 function GameLoop()
 {
     Background.Draw();
-    player.Animate();
+    player.Animate(player.size, player.animationStatus);
+
+    // Test collision, before adding collsion map.
+    if(player.y >= canvas.height - 230 && i > 0)
+    {
+        isOnGround = true;
+        mirrorImage ? player.animationStatus = "idle_mirrored" : player.animationStatus = "idle";
+    }
 
     // Animate the character sprites
     frameCounter++;

@@ -1,11 +1,15 @@
+let i = 0;
+
 class Player
 {
     constructor()
     {
         this.x = canvas.width / 2;
         this.y = canvas.height - 230;
+        this.animationStatus = "idle";
         this.speed = 7;
         this.size = "small";
+        this.velocity = {x: 0.0, y: 0.0};
     }
 
     /**
@@ -54,14 +58,44 @@ class Player
 
     /**
      * Handles the player animation in this function in order to keep the main file clean.
+     * @param size - The size of the player's sprite to be drawn at. Options are "small" (or 0) and "large" (or 1)
+     * @param status - The animation status of the player. Options are "idle", "moving", "jumping",
+     *      "idle_mirrored", "moving_mirrored", and "jumping_mirrored"
      */
-    Animate()
+    Animate(size, status)
     {
-        if(isIdle && !mirrorImage) this.size == "small" ? player.Draw(images[0][0], false) : player.Draw(images[1][0], false);
-        else if(isIdle && mirrorImage) this.size == "small" ? player.Draw(images[0][0], true) : player.Draw(images[1][0], true);
-        else if(!isIdle && !mirrorImage) this.size == "small" ? player.Draw(images[0][count], false) : player.Draw(images[1][count], false);
-        else if(!isIdle && mirrorImage) this.size == "small" ? player.Draw(images[0][count], true) : player.Draw(images[1][count], true); 
-        else console.log("An error has occured in drawing the player sprite!");
+        switch(size)
+        {
+            case "small": case 0:
+                switch(status)
+                {
+                    case "idle": player.Draw(images[0][0], false); break;
+                    case "moving": player.Draw(images[0][count], false); break;
+                    case "jumping": player.Draw(images[0][3], false); break;
+                    case "idle_mirrored": player.Draw(images[0][0], true); break;
+                    case "moving_mirrored": player.Draw(images[0][count], true); break;
+                    case "jumping_mirrored": player.Draw(images[0][3], true); break;     
+                    // Add death animation afterwords.
+                    // case "dead": break;             
+                }
+                break;
+
+            case "large": case 1:
+                switch(status)
+                {
+                    case "idle": player.Draw(images[1][0], false); break;
+                    case "moving": player.Draw(images[1][count], false); break;    
+                    case "jumping":player.Draw(images[1][3], false); break;
+                    case "idle_mirrored": player.Draw(images[1][0], true); break;
+                    case "moving_mirrored": player.Draw(images[1][count], true); break;
+                    case "jumping_mirrored": player.Draw(images[1][3], true); break;      
+                    // Add death animation afterwords. 
+                    // case "dead": break;
+                }
+                break;
+
+            default: console.log("An error has occured in drawing the player sprite!")
+        }
     }
 
     /**
@@ -79,14 +113,32 @@ class Player
     }
 
     /**
-     * Handles the player jumping, using proper gravity and velocity
-     * Still WIP as of 5/14/2019
-     * TODO: Finish this
+     * Asynchronous function to allow the player to jump.
      */
-    Jump()
+    async Jump()
     {
-        this.y += velocity * deltaTime;
-        velocity += gravity * deltaTime;
+        if(isJumping) return;
+        isJumping = true;
+        setTimeout(() => {
+            if(i >= 100) { i = 0; return; }
+            if(isOnGround && i > 0)
+            {
+                this.velocity.y = 0;
+                i = 0;
+                return;
+            }
+
+            else
+            {
+                this.velocity.y += 0.4;
+                this.y += this.velocity.y;
+                // console.log(`Velocity(${this.velocity.x}, ${this.velocity.y})`); // Debug velocity
+            }
+            player.Jump();
+            i++;
+        }, 10);
+
+        isJumping = false;
     }
 
     /**
