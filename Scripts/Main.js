@@ -6,6 +6,7 @@ var player = new Player(), count = 4, frameCounter = 0,
     isJumping = false, isOnGround = true;
 const A = 65, D = 68, SPACE = 32;
 var canvasMatrix = matrixIdentity;
+var keyMap = {};
 
 /**
  * Initializes some things before calling GameLoop or starting the main menu
@@ -20,36 +21,130 @@ function Main()
     Sound.PlayMusic("1-1", true);
 
     // Event Listeners
-    window.addEventListener("keydown", (key) => {
-        switch(key.keyCode)
-		{
-            case A:
-                player.Move("LEFT");
-                isIdle = false;
-                mirrorImage = true;
-                player.animationStatus = "moving_mirrored";
-                break;
+    onkeydown = onkeyup = (key) => {
+        // USING SWITCH STATEMENT:
+        // ###############################
+        // switch(key.keyCode)
+		// {
+        //     case A:
+        //         player.Move("LEFT");
+        //         isIdle = false;
+        //         mirrorImage = true;
+        //         player.animationStatus = "moving_mirrored";
+        //         break;
 
-            case D:
-                player.Move("RIGHT");
-                isIdle = false;
-                mirrorImage = false;
-                player.animationStatus = "moving";
-                break;
+        //     case D:
+        //         player.Move("RIGHT");
+        //         isIdle = false;
+        //         mirrorImage = false;
+        //         player.animationStatus = "moving";
+        //         break;
 
-            case SPACE:
-                if(isOnGround)
-                {
-                    player.velocity.y = -14.0;
-                    player.Jump();
-                    isOnGround = false;
-                    mirrorImage ? player.animationStatus = "jumping_mirrored" : player.animationStatus = "jumping"
-                }
-                // Debug if the player is on the ground.
-                // else console.log(`Cannot Jump! Player is already jumping!`);
-                break;
-		}
-    });
+        //     case SPACE:
+        //         if(isOnGround)
+        //         {
+        //             player.velocity.y = -14.0;
+        //             player.Jump();
+        //             isOnGround = false;
+        //             mirrorImage ? player.animationStatus = "jumping_mirrored" : player.animationStatus = "jumping"
+        //         }
+        //         // Debug if the player is on the ground.
+        //         // else console.log(`Cannot Jump! Player is already jumping!`);
+        //         break;
+        // }
+
+
+        
+        // USING IF STATEMENTS:
+        // ###############################
+        // if(key.keyCode == A)
+        // {
+        //     player.Move("LEFT");
+        //     isIdle = false;
+        //     mirrorImage = true;
+        //     player.animationStatus = "moving_mirrored";
+        // }
+
+        // if(key.keyCode == D)
+        // {
+        //     player.Move("RIGHT");
+        //     isIdle = false;
+        //     mirrorImage = false;
+        //     player.animationStatus = "moving";
+        // }
+
+        // if(key.keyCode == SPACE)
+        // {
+        //     if(isOnGround)
+        //     {
+        //         player.velocity.y = -14.0;
+        //         player.Jump();
+        //         isOnGround = false;
+        //         mirrorImage ? player.animationStatus = "jumping_mirrored" : player.animationStatus = "jumping"
+        //     }
+            
+        //     // Debug if the player is on the ground.
+        //     // else console.log(`Cannot Jump! Player is already jumping!`);
+        // }
+
+        
+
+        //USING S.O. METHOD
+        // ###############################
+        key = key || event;
+        keyMap[key.keyCode] = key.type == 'keydown';
+
+        if(keyMap[A] && keyMap[SPACE])
+        {
+            player.Move("LEFT");
+            isIdle = false;
+            mirrorImage = true;
+            isJumping = true;
+            player.animationStatus = "jumping_mirrored";
+        }
+
+        if(keyMap[D] && keyMap[SPACE])
+        {
+            player.Move("RIGHT");
+            isIdle = false;
+            mirrorImage = false;
+            isJumping = true;
+            player.animationStatus = "jumping";
+        }
+
+        if(keyMap[A])
+        {
+            player.Move("LEFT");
+            isIdle = false;
+            mirrorImage = true;
+            player.animationStatus = "moving_mirrored"; 
+        }
+
+        if(keyMap[D])
+        {
+            player.Move("RIGHT");
+            isIdle = false;
+            mirrorImage = false;
+            player.animationStatus = "moving";
+        }
+
+        if(keyMap[SPACE])
+        {
+            if(isOnGround)
+            {
+                player.velocity.y = -14.0;
+                player.Jump();
+                isOnGround = false;
+                mirrorImage ? player.animationStatus = "jumping_mirrored" : player.animationStatus = "jumping";
+            }
+            
+            // Debug if the player is on the ground.
+            // else console.log(`Cannot Jump! Player is already jumping!`);
+        }
+
+        for(let i = 0; i < keyMap.length; i++)
+            console.log(`Keys Being Pressed ${keyMap[i]}`);
+    }
 
     window.addEventListener("keyup", (key) => {
         isIdle = true;
