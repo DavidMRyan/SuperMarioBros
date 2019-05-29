@@ -20,4 +20,14 @@ class Sound
      * Stops the currently playing music for the level
      */
     static StopMusic() {if(isPlaying.bool) isPlaying.music.pause(); }
+
+    /**
+     * Plays a sound effect specified by the parameter
+     * @param effect - The sound effect to be played
+     */
+    static PlayFX(effect)
+    {
+        let fx = new Audio(`/Assets/Sound/Global/${effect}.wav`);
+        fx.play();
+    }
 }
