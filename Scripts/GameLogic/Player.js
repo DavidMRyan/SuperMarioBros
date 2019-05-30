@@ -119,7 +119,6 @@ class Player
     {
         if(isJumping) return;
         isJumping = true;
-        player.size == "small" ? Sound.PlayFX("Jump_Small") : Sound.PlayFX("Jump_Large");
         setTimeout(() => {
             if(i >= 100) { i = 0; return; }
             if(isOnGround && i > 0)

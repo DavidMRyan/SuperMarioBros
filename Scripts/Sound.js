@@ -27,7 +27,7 @@ class Sound
      */
     static PlayFX(effect)
     {
-        let fx = new Audio(`/Assets/Sound/Global/${effect}.wav`);
+        let fx = new Audio(`Assets/Sound/Global/${effect}.wav`);
         fx.play();
     }
 }

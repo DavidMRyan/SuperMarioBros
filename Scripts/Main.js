@@ -101,6 +101,7 @@ function Main()
             if(isOnGround)
             {
                 player.velocity.y = -14.0;
+                player.size == "small" ? Sound.PlayFX("Jump_Small") : Sound.PlayFX("Jump_Large");
                 player.Jump();
                 isOnGround = false;
                 mirrorImage ? player.animationStatus = "jumping_mirrored" : player.animationStatus = "jumping";
@@ -115,11 +116,11 @@ function Main()
             console.log(`Keys Being Pressed ${keyMap[i]}`);
     }
 
-    // window.addEventListener("keyup", (key) => {
-    //     isIdle = true;
-    //     if(isOnGround)
-    //         mirrorImage ? player.animationStatus = "idle_mirrored" : player.animationStatus = "idle";
-    // });
+    window.addEventListener("keyup", (key) => {
+        isIdle = true;
+        if(isOnGround)
+            mirrorImage ? player.animationStatus = "idle_mirrored" : player.animationStatus = "idle";
+    });
 
 /**
  * Runs the game portion of the program
