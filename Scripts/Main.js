@@ -1,12 +1,17 @@
-/**
- * [Insert Prologue Block Here]
- */
+/*
+    Author: David Ryan
+    Period: 7
+    Computer Science 2
+    Due Date: June 7th, 2019
+    Github: https://www.github.com/NitroFire1289/[REPO_NAME_HERE ]
+    [Note: All assets are owned by Nintendo, no copyright infringement was intended.]
+*/
 var player = new Player(), count = 4, frameCounter = 0,
     isIdle = true, mirrorImage = false,
     isJumping = false, isOnGround = true;
 const A = 65, D = 68, SPACE = 32;
 var canvasMatrix = matrixIdentity;
-var keyMap = [];
+var keyMap = [], sounds = [];
 
 /**
  * Initializes some things before calling GameLoop or starting the main menu
@@ -106,21 +111,19 @@ function Main()
                 isOnGround = false;
                 mirrorImage ? player.animationStatus = "jumping_mirrored" : player.animationStatus = "jumping";
             }
-            
-            // Debug if the player is on the ground.
-            // else console.log(`Cannot Jump! Player is already jumping!`);
         }
-        }
-
-        for(let i = 0; i < keyMap.length; i++)
-            console.log(`Keys Being Pressed ${keyMap[i]}`);
     }
+
+    // Debug the keys being pressed
+    // for(let i = 0; i < keyMap.length; i++)
+    //     console.log(`Keys Being Pressed ${keyMap[i]}`);
 
     window.addEventListener("keyup", (key) => {
         isIdle = true;
         if(isOnGround)
             mirrorImage ? player.animationStatus = "idle_mirrored" : player.animationStatus = "idle";
     });
+}
 
 /**
  * Runs the game portion of the program
@@ -137,6 +140,7 @@ function GameLoop()
         mirrorImage ? player.animationStatus = "idle_mirrored" : player.animationStatus = "idle";
     }
 
+    console.log(`Player Position: (${player.x}, ${player.y})`)
     // Animate the character sprites
     frameCounter++;
     if(frameCounter % 5 == 0) count++; // Increment the current image to draw every 5 frames

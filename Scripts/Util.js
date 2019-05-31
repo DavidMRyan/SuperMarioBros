@@ -45,7 +45,17 @@ class Util
 		// Initialize the Large Mario Images
 		for(let j = 0; j < largeMario.length; j++)
 			images[1][j] = largeMario[j];
-	}
+    }
+    
+    // static EndLevel(x, sfx)
+    // {
+    //     let allAudio = [];
+
+    //     if(player.x >= x)
+    //     {
+    //         allAudio.
+    //     }        
+    // }
 }
 
 var gravity = 0,

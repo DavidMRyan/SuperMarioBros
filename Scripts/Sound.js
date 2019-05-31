@@ -30,4 +30,20 @@ class Sound
         let fx = new Audio(`Assets/Sound/Global/${effect}.wav`);
         fx.play();
     }
+
+    /**
+     * Stop all sounds from playing
+     * WIP as of 5/31/19
+     */
+    // static StopAllSounds()
+    // {
+    //     let allSounds = GetAllSounds();
+    //     allSounds.forEach(sound => { sound.pause(); sound.currentTime = 0; });
+    // }
+
+    /**
+     * Accessor Method to retrieve all the sounds in the 'sounds' array
+     * WIP as of 5/31/19
+     */
+    static GetAllSounds() { }
 }
