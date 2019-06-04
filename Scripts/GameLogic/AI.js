@@ -5,12 +5,15 @@ class AI
         // Change later to use collision map's X and Y positions.
         this.x = canvas.width / 2;
         this.y = canvas.height - 230;
-        this.animationStatus = "idle";
+        this.animationStatus = "moving";
         this.speed = 7;
-        this.size = "small";
         this.velocity = {x: 0.0, y: 0.0};
     }
 
+    /**
+     * Initializes the array of enemies to be placed in the world.
+     * @param amount - The amount of enemies to be added to the array
+     */
     static InitializeAIArray(amount)
     {
         for(let i = 0; i < amount; i++)
@@ -68,18 +71,14 @@ class AI
      */
     Animate(status)
     {
-        switch(status)
-        {
-            // Create an AI array, and draw it with the correct images.
-            // #######################################################
-            // case "idle": player.Draw(images[0][0], false); break;
-            // case "moving": player.Draw(images[0][count], false); break;
-            // case "jumping": player.Draw(images[0][3], false); break;
-            // case "idle_mirrored": player.Draw(images[0][0], true); break;
-            // case "moving_mirrored": player.Draw(images[0][count], true); break;
-            // case "jumping_mirrored": player.Draw(images[0][3], true); break;
-            // default: console.log("An error has occured in drawing the AI sprite!");
-        }  
+        enemies.forEach(enemy => {
+            switch(status)
+            {
+                case "moving": enemy.Draw(enemyImages[enemyCount], false); break;
+                case "moving_mirrored": enemy.Draw(enemyImages[enemyCount], true); break;
+                default: console.log("An error has occured in drawing the AI sprite!");
+            }
+        });
     }
 
     /**
@@ -124,4 +123,27 @@ class AI
 
         isJumping = false;
     }
+
+    static InitializeImageArray(div)
+	{
+		// Initialize the AI Images
+		for(let i = 0; i < document.getElementById(div).children.length; i++)
+			enemyImages[i] = document.getElementById(div).children[i];
+    }
+
+    /**
+     * Sets the spawn position of the AI in the world
+     * @param x - The X value of the spawn position
+     * @param y - The Y value of the spawn position
+     */
+    SetSpawn(x, y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+
+    /**
+     * Accessor function which returns a new object containing the X and Y position of the AI
+     */
+    GetPosition() { return {x: this.x, y: this.y}; }
 }

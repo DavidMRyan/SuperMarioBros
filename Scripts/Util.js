@@ -23,39 +23,24 @@ class Canvas
 var images = [];
 var smallMario,
 	largeMario;
+var isAlreadyPlaying = false;
 
 class Util
 {
 	/**
-	 * Initializes the two dimensional array, containing the character's sprites
-	 * images[0] - Array of small character sprites
-	 * images[1] - Array of large character sprites
+	 * Starts the end of the stage (animations and sound effects)
+	 * @param x - The X position for this 'trigger' to be placed
+	 * @param sfx - The song to be played at the end of the level
 	 */
-	static InitializeImageArray()
-	{
-		images[0] = []; // Small Mario Images
-		images[1] = []; // Large Mario Images
-		smallMario = document.getElementById("small_mario").children;
-		largeMario = document.getElementById("large_mario").children;
-
-		// Initialize the Small Mario Images
-		for(let i = 0; i < smallMario.length; i++)
-			images[0][i] = smallMario[i];
-
-		// Initialize the Large Mario Images
-		for(let j = 0; j < largeMario.length; j++)
-			images[1][j] = largeMario[j];
+    static EndLevel(x, sfx)
+    {
+		if(!isAlreadyPlaying && player.x >= x)
+		{
+			Sound.StopMusic();
+			sfx.play();
+			isAlreadyPlaying = true;
+		}
     }
-    
-    // static EndLevel(x, sfx)
-    // {
-    //     let allAudio = [];
-
-    //     if(player.x >= x)
-    //     {
-    //         allAudio.
-    //     }        
-    // }
 }
 
 var gravity = 0,

@@ -1,4 +1,4 @@
-isPlaying = {sound: null, bool: false};
+let currentSong = null;
 
 class Sound
 {
@@ -11,15 +11,14 @@ class Sound
     {
         let music = new Audio(`Assets/Sound/${level}/${level}.mp3`);
         music.play();
-        isPlaying.music = music;
-        isPlaying.bool = true;
+        currentSong = music;
         if(loop) music.loop = true;
     }
 
     /**
      * Stops the currently playing music for the level
      */
-    static StopMusic() {if(isPlaying.bool) isPlaying.music.pause(); }
+    static StopMusic() { currentSong.pause(); }
 
     /**
      * Plays a sound effect specified by the parameter
@@ -30,20 +29,4 @@ class Sound
         let fx = new Audio(`Assets/Sound/Global/${effect}.wav`);
         fx.play();
     }
-
-    /**
-     * Stop all sounds from playing
-     * WIP as of 5/31/19
-     */
-    // static StopAllSounds()
-    // {
-    //     let allSounds = GetAllSounds();
-    //     allSounds.forEach(sound => { sound.pause(); sound.currentTime = 0; });
-    // }
-
-    /**
-     * Accessor Method to retrieve all the sounds in the 'sounds' array
-     * WIP as of 5/31/19
-     */
-    static GetAllSounds() { }
 }

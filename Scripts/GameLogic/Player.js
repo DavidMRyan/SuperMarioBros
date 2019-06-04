@@ -4,12 +4,33 @@ class Player
 {
     constructor()
     {
+        this.size = "small";
         this.x = canvas.width / 2;
-        this.y = canvas.height - 230;
+        this.size == "small" ? this.y = 611 : this.y = 570;
         this.animationStatus = "idle";
         this.speed = 7;
-        this.size = "small";
         this.velocity = {x: 0.0, y: 0.0};
+    }
+
+    /**
+	 * Initializes the two dimensional array, containing the character's sprites
+	 * images[0] - Array of small character sprites
+	 * images[1] - Array of large character sprites
+	 */
+	static InitializeImageArray()
+	{
+		images[0] = []; // Small Mario Images
+		images[1] = []; // Large Mario Images
+		smallMario = document.getElementById("small_mario").children;
+		largeMario = document.getElementById("large_mario").children;
+
+		// Initialize the Small Mario Images
+		for(let i = 0; i < smallMario.length; i++)
+			images[0][i] = smallMario[i];
+
+		// Initialize the Large Mario Images
+		for(let j = 0; j < largeMario.length; j++)
+			images[1][j] = largeMario[j];
     }
 
     /**
@@ -142,6 +163,17 @@ class Player
     }
 
     /**
+     * Sets the spawn position of the player in the world
+     * @param x - The X value of the spawn position
+     * @param y - The Y value of the spawn position
+     */
+    SetSpawn(x, y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+
+    /**
      * Mutator function, to change the player 'size' to either 'small' or 'large'
      * allowing the program to decide which character sprites to use
      * @param newSize - The new size for the character to be drawn at
@@ -152,4 +184,9 @@ class Player
      * Accessor function to return the current size of the player
      */
     GetSize() { return this.size; }
+
+    /**
+     * Accessor function which returns a new object containing the X and Y position of the Player
+     */
+    GetPosition() { return {x: this.x, y: this.y}; }
 }
