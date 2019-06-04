@@ -3,12 +3,14 @@
     Period: 7
     Computer Science 2
     Due Date: June 7th, 2019
-    Github: https://www.github.com/NitroFire1289/[REPO_NAME_HERE ]
+    Github: https://www.github.com/DavidMRyan/[REPO_NAME_HERE ]
+    Version: 1.0
     [Note: All assets are owned by Nintendo, no copyright infringement was intended.]
 */
 var player = new Player(), count = 4, frameCounter = 0,
     isIdle = true, mirrorImage = false,
     isJumping = false, isOnGround = true;
+var enemies = [];
 const A = 65, D = 68, SPACE = 32;
 var canvasMatrix = matrixIdentity;
 var keyMap = [], sounds = [];
@@ -22,8 +24,10 @@ function Main()
 
     // Game Setup
     Util.InitializeImageArray();
-    player.SetSize("large");
+    AI.InitializeAIArray(5);
+    Collision.InitializeCollisionMap("1_1_col");
     Sound.PlayMusic("1-1", true);
+    player.SetSize("large"); // Just for Debugging!
 
     // Event Listeners
     onkeydown = onkeyup = (key) => {
@@ -140,7 +144,7 @@ function GameLoop()
         mirrorImage ? player.animationStatus = "idle_mirrored" : player.animationStatus = "idle";
     }
 
-    console.log(`Player Position: (${player.x}, ${player.y})`)
+    // console.log(`Player Position: (${player.x}, ${player.y})`);
     // Animate the character sprites
     frameCounter++;
     if(frameCounter % 5 == 0) count++; // Increment the current image to draw every 5 frames

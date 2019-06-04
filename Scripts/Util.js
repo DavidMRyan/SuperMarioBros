@@ -72,7 +72,7 @@ class Physics
 	static GetVelocity() { return velocity; }
 }
 
-var background = document.getElementById("background");
+var background = document.getElementById("1_1_col");
 
 class Background
 {

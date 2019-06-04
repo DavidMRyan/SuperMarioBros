@@ -11,6 +11,12 @@ class AI
         this.velocity = {x: 0.0, y: 0.0};
     }
 
+    static InitializeAIArray(amount)
+    {
+        for(let i = 0; i < amount; i++)
+            enemies[i] = new AI();
+    }
+
     /**
      * Draws the AI onto the canvas using a specified image file
      * @param image - The image of the AI to be used as the character sprite
