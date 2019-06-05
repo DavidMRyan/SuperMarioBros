@@ -3,16 +3,22 @@
 <html lang="en">
     <head>
         <title>Super Mario Bros.</title>
+        <link rel="stylesheet" src="Style/style.css">
     </head>
-    <body onload="Main()">
+    <body onload="MainMenu()">
         <canvas id="canvas" width="1024px" height="800px">
             This message is displayed if your browser doesn't support the HTML5 'Canvas' element.
         </canvas>
 
         <div id="images">
+            <!-- HUD -->
+            <img id="menu_logo" src="Assets/Images/UI/Logo.png" style="display: none;">
+            <img id="mushroom" src="Assets/Images/Items/Mushroom/Mushroom.png" style="display: none;">
+
             <!-- Background -->
             <img id="1_1" src="Assets/Images/Levels/1-1.png" style="display: none;">
             <img id="1_1_col" src="Assets/Images/Levels/1-1_col.png" style="display: none;">
+            <img id="1_1_col_test" src="Assets/Images/Levels/1-1_col_test.bmp" style="display: none;">
 
             <!-- Goomba -->
             <div id="goomba">
@@ -51,6 +57,8 @@
         <script src="Scripts/Sound.js"></script>
         <script src="Scripts/GameLogic/AI.js"></script>
         <script src="Scripts/GameLogic/Player.js"></script>
+        <script src="Scripts/UI/HUD.js"></script>
+        <script src="Scripts/UI/MainMenu.js"></script>
         <script src="Scripts/Main.js"></script>
     </body>
 </html>

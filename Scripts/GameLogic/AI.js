@@ -124,6 +124,10 @@ class AI
         isJumping = false;
     }
 
+    /**
+     * Initializes an array containing the AI images
+     * @param div - The <div> element in the HTML file to check for the images
+     */
     static InitializeImageArray(div)
 	{
 		// Initialize the AI Images

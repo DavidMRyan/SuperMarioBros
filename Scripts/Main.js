@@ -25,7 +25,8 @@ function Main()
     // Game Setup
     Player.InitializeImageArray();
     AI.InitializeAIArray(14);
-    Collision.InitializeCollisionMap("1_1_col");
+    // Collision.InitializeCollisionMap("1_1_col");
+    // Collision.InitializeCollisionMap("1_1_col_test");
     Sound.PlayMusic("1-1", true);
     player.SetSize("small"); // Just for Debugging!
 
@@ -127,18 +128,21 @@ function GameLoop()
     {
         isOnGround = true;
         mirrorImage ? player.animationStatus = "idle_mirrored" : player.animationStatus = "idle";
+        player.y = 611;
     }
 
     else if(player.size == "large" && player.y >= 570 && i > 0)
     {
         isOnGround = true;
         mirrorImage ? player.animationStatus = "idle_mirrored" : player.animationStatus = "idle";
+        player.y = 570;
     }
 
     // console.log(`Player Position: (${player.x}, ${player.y})`);
     // Animate the character sprites
     frameCounter++;
-    if(frameCounter % 5 == 0) { count++; enemyCount++; } // Increment the current image to draw every 5 frames
+    if(frameCounter % 5 == 0) count++; // Increment the current image to draw every 5 frames
+    if(frameCounter % 10 == 0) enemyCount++;
     if(count > 7) count = 4;
     if(enemyCount > 1) enemyCount = 0;
 }

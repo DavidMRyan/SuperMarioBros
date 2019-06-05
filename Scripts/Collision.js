@@ -1,4 +1,4 @@
-var data;
+// var data;
 
 class Collision
 {
@@ -8,33 +8,38 @@ class Collision
      */
     static GetImageBytes(file)
     {
-        let image = {width: document.getElementById(file).width, height: document.getElementById(file).height};
-        let rect = {x: 0, y: 0, width: image.width, height: image.height};
-        let imageData = c.getImageData(rect.x, rect.y, rect.width, rect.height);
+        // let image = {width: document.getElementById(file).width, height: document.getElementById(file).height};
+        // let rect = {x: 1, y: 1, width: image.width, height: image.height};
+        // let image2 = c.getImageData(rect.x, rect.y, rect.width, rect.height);
+        // let data = image2.data;
         // let biWidth = imageData.getUint32(18, true);
         // let biBitCount = imageData.getUint16(28, true);
         // let stride = Math.abs(Math.floor((biBitCount * biWidth + 31) / 32) * 4);
-        let stride = 1;
+        // let stride = 1;
         let result = [];
+        result[0] = [];
 
-        for(let col = 0; col < image.width; ++col)
-        {
-            result[col] = [];
-            for(let row = 0; row < image.height; ++row)
-            {
-                let currentColor = imageData[row * stride / 4 + col];
-                let color = {r: 0, g: 0, b: 0, a: 0};
+        result[0][0] = 'rgba(' + data[0] + ', ' + data[1] + ', ' + data[2] + ', ' + (data[3] / 255) + ')';
+        console.log(result[0][0]);
 
-                color.r = (currentColor & 0xff0000) >> 16;
-                color.g = (currentColor & 0xff00) >> 8;
-                color.b = currentColor & 0xff;
-                color.a = (currentColor & 0xff000000) >> 24;
-                result[col][row] = color;
-            }
-        }
+        // for(let col = 0; col < image.width; ++col)
+        // {
+        //     result[col] = [];
+        //     for(let row = 0; row < image.height; ++row)
+        //     {
+        //         let currentColor = imageData;
+        //         let color = {r: 0, g: 0, b: 0, a: 0};
 
-        return result;
+        //         color.r = (currentColor); /* & 0xff0000) >> 16;*/
+        //         color.g = (currentColor); /* & 0xff00) >> 8; */
+        //         color.b = currentColor; /* & 0xff; */
+        //         color.a = (currentColor); /* & 0xff000000) >> 24;*/
+        //         result[col][row] = color;
+        //     }
+        // }
+
+        // return result;
     }
 
-    static InitializeCollisionMap(collisionMap) { data = Collision.GetImageBytes(collisionMap); }
+    static InitializeCollisionMap(collisionMap) { Collision.GetImageBytes(collisionMap); }
 }
