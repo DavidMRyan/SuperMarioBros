@@ -33,15 +33,8 @@ function DrawMainMenu()
     {
         animationFrameID = requestAnimationFrame(DrawMainMenu);
         Background.Draw();
-        c.beginPath();
-        c.fillStyle = "white";
-        c.font = "24pt Arial";
-
-        c.fillText("MARIO", 50, 50);
-        c.fillText("x00", 350, 50);
-        c.fillText("WORLD 1-1", 550, 50);
-        c.fillText("TIME", 900, 50);
-
+        HUD.DrawHUD();
+        
         c.drawImage(logo, (canvas.width / 2) - (logo.width / 2), 75, logo.width, logo.height);
         c.fillText("By David Ryan", 525, 350);
 

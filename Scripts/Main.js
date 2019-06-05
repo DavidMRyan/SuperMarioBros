@@ -119,6 +119,7 @@ function Main()
 function GameLoop()
 {
     Background.Draw();
+    HUD.DrawHUD();
     Util.EndLevel(9970, new Audio("Assets/Sound/Global/StageClear.wav"));
     player.Animate(player.size, player.animationStatus);
     enemies[0].Animate("moving"); // Temporary solution to animation
