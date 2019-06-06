@@ -33,11 +33,12 @@ function DrawMainMenu()
     {
         animationFrameID = requestAnimationFrame(DrawMainMenu);
         Background.Draw();
-        HUD.DrawHUD();
+        // HUD.DrawHUD();
         
+        c.fillStyle = "white";
+        c.font = "24pt Super Plumber Brothers";
         c.drawImage(logo, (canvas.width / 2) - (logo.width / 2), 75, logo.width, logo.height);
         c.fillText("By David Ryan", 525, 350);
-
         c.fillText("Click [Enter] To Begin!", (canvas.width / 2) - 150, 550);
         c.fillText("Quit", (canvas.width / 2) - 40, 650);
         c.drawImage(mushroom.image, mushroom.x, mushroom.y, mushroom.image.width, mushroom.image.height);

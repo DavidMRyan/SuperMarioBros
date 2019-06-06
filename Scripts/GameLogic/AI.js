@@ -135,6 +135,8 @@ class AI
 			enemyImages[i] = document.getElementById(div).children[i];
     }
 
+    static GetImageArray(div) { return document.getElementById(div).children; }
+
     /**
      * Sets the spawn position of the AI in the world
      * @param x - The X value of the spawn position

@@ -95,9 +95,8 @@ class Player
                     case "jumping": player.Draw(images[0][3], false); break;
                     case "idle_mirrored": player.Draw(images[0][0], true); break;
                     case "moving_mirrored": player.Draw(images[0][count], true); break;
-                    case "jumping_mirrored": player.Draw(images[0][3], true); break;     
-                    // Add death animation afterwords.
-                    // case "dead": break;             
+                    case "jumping_mirrored": player.Draw(images[0][3], true); break;
+                    case "dead": player.Draw(document.getElementById("MarioDead"), false); break;            
                 }
                 break;
 
@@ -109,9 +108,8 @@ class Player
                     case "jumping":player.Draw(images[1][3], false); break;
                     case "idle_mirrored": player.Draw(images[1][0], true); break;
                     case "moving_mirrored": player.Draw(images[1][count], true); break;
-                    case "jumping_mirrored": player.Draw(images[1][3], true); break;      
-                    // Add death animation afterwords. 
-                    // case "dead": break;
+                    case "jumping_mirrored": player.Draw(images[1][3], true); break;
+                    case "dead": player.Draw(document.getElementById("MarioDead"), false); break;   
                 }
                 break;
 
@@ -160,6 +158,14 @@ class Player
         }, 10);
 
         isJumping = false;
+    }
+
+    Death()
+    {
+        player.animationStatus = "dead";
+        Sound.StopMusic();
+        Sound.PlayFX("Dead");
+        console.log("The player has died!");
     }
 
     /**

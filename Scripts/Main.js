@@ -9,7 +9,7 @@
 */
 var player = new Player(), count = 4, frameCounter = 0,
     isIdle = true, mirrorImage = false,
-    isJumping = false, isOnGround = true;
+    isJumping = false, isOnGround = true, isDead = false;
 var enemies = [], enemyImages = [], enemyCount = 0;
 var canvasMatrix = matrixIdentity;
 var keyMap = [], sounds = [];
@@ -51,7 +51,7 @@ function Main()
         key = key || event;
         keyMap[key.keyCode] = key.type == 'keydown'
         
-        // TODO: Add multiple keypresses later
+        // TODO: Add multiple keypresses
         // ###################################
         //
         // if(keyMap[A] && keyMap[SPACE])
@@ -75,23 +75,29 @@ function Main()
 
         if(keyMap[A])
         {
-            player.Move("LEFT");
-            isIdle = false;
-            mirrorImage = true;
-            player.animationStatus = "moving_mirrored"; 
+            if(!isDead)
+            {
+                player.Move("LEFT");
+                isIdle = false;
+                mirrorImage = true;
+                player.animationStatus = "moving_mirrored"; 
+            }
         }
 
         if(keyMap[D])
         {
-            player.Move("RIGHT");
-            isIdle = false;
-            mirrorImage = false;
-            player.animationStatus = "moving";
+            if(!isDead)
+            {
+                player.Move("RIGHT");
+                isIdle = false;
+                mirrorImage = false;
+                player.animationStatus = "moving";
+            }  
         }
 
         if(keyMap[SPACE])
         {
-            if(isOnGround)
+            if(isOnGround && !isDead)
             {
                 player.velocity.y = -14.0;
                 player.size == "small" ? Sound.PlayFX("Jump_Small") : Sound.PlayFX("Jump_Large");
@@ -107,9 +113,12 @@ function Main()
     //     console.log(`Keys Being Pressed ${keyMap[i]}`);
 
     window.addEventListener("keyup", (key) => {
-        isIdle = true;
-        if(isOnGround)
-            mirrorImage ? player.animationStatus = "idle_mirrored" : player.animationStatus = "idle";
+        if(!isDead)
+        {
+            isIdle = true;
+            if(isOnGround)
+                mirrorImage ? player.animationStatus = "idle_mirrored" : player.animationStatus = "idle";
+        } 
     });
 }
 
@@ -119,7 +128,7 @@ function Main()
 function GameLoop()
 {
     Background.Draw();
-    HUD.DrawHUD();
+    // HUD.DrawHUD();
     Util.EndLevel(9970, new Audio("Assets/Sound/Global/StageClear.wav"));
     player.Animate(player.size, player.animationStatus);
     enemies[0].Animate("moving"); // Temporary solution to animation
@@ -138,6 +147,22 @@ function GameLoop()
         mirrorImage ? player.animationStatus = "idle_mirrored" : player.animationStatus = "idle";
         player.y = 570;
     }
+
+    // Test AI Collision
+    for(let i = 0; i < enemies.length; i++)
+    {
+        if(player.x >= enemies[i].x - 30 && player.x <= (enemies[i].x + AI.GetImageArray("goomba")[0].width) + 3
+                && player.y >= enemies[i].y && player.y <= enemies[i].y + AI.GetImageArray("goomba")[0].height)
+            {
+                if(!isDead)
+                {
+                    player.Death();
+                    isDead = true;
+                    console.log("Player -> AI collision detected!");
+                }   
+            }
+    }
+    
 
     // console.log(`Player Position: (${player.x}, ${player.y})`);
     // Animate the character sprites
