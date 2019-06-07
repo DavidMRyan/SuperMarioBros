@@ -40,7 +40,9 @@ class Util
 			sfx.play();
 			isAlreadyPlaying = true;
 		}
-    }
+	}
+	
+	static Sleep (milliseconds) { return new Promise(resolve => setTimeout(resolve, milliseconds)) }
 }
 
 var gravity = 0,

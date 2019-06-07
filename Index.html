@@ -5,7 +5,7 @@
         <title>Super Mario Bros.</title>
         <link rel="stylesheet" src="Style/style.css">
     </head>
-    <body onload="Main()">
+    <body onload="MainMenu()">
         <canvas id="canvas" width="1024px" height="800px">
             This message is displayed if your browser doesn't support the HTML5 'Canvas' element.
         </canvas>
@@ -14,6 +14,13 @@
             <!-- HUD -->
             <img id="menu_logo" src="Assets/Images/UI/Logo.png" style="display: none;">
             <img id="mushroom" src="Assets/Images/Items/Mushroom/Mushroom.png" style="display: none;">
+
+            <!-- Blocks -->
+            <img id="brick_block" src="Assets/Images/Items/Brick/Brick.png" style="display: none;">
+            <img id="item_block00" src="Assets/Images/Items/Question Block/EmptyBlock.png" style="display: none;">
+            <img id="item_block01" src="Assets/Images/Items/Question Block/QuestionBlock_01.png" style="display: none;">
+            <img id="item_block02" src="Assets/Images/Items/Question Block/QuestionBlock_02.png" style="display: none;">
+            <img id="item_block03" src="Assets/Images/Items/Question Block/QuestionBlock_03.png" style="display: none;">
 
             <!-- Background -->
             <img id="1_1" src="Assets/Images/Levels/1-1.png" style="display: none;">
@@ -51,9 +58,12 @@
             </div>
         </div>
 
+        <script src="Scripts/Interval.js"></script>
         <script src="Scripts/Util.js"></script>
+        <script src="Scripts/GameLogic/GameOver.js"></script>
         <script src="Scripts/Matrix.js"></script>
         <script src="Scripts/Collision.js"></script>
+        <script src="Scripts/GameLogic/Brick.js"></script>
         <script src="Scripts/Sound.js"></script>
         <script src="Scripts/GameLogic/AI.js"></script>
         <script src="Scripts/GameLogic/Player.js"></script>

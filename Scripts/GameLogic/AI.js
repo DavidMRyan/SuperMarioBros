@@ -96,7 +96,7 @@ class AI
     }
 
     /**
-     * Asynchronous function to allow the player to jump.
+     * Asynchronous function to allow the AI to jump.
      */
     async Jump()
     {

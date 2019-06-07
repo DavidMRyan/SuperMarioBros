@@ -7,6 +7,7 @@
     Version: 1.0
     [Note: All assets are owned by Nintendo, no copyright infringement was intended.]
 */
+var Game = new Interval();
 var player = new Player(), count = 4, frameCounter = 0,
     isIdle = true, mirrorImage = false,
     isJumping = false, isOnGround = true, isDead = false;
@@ -14,13 +15,29 @@ var enemies = [], enemyImages = [], enemyCount = 0;
 var canvasMatrix = matrixIdentity;
 var keyMap = [], sounds = [];
 const A = 65, D = 68, SPACE = 32;
+var blocks = [
+    // Ground
+    new Brick("collision", 0, 652.25, 3467.75, 611),
+    new Brick("collision", 3566.3, 652.25, 755, 611),
+    new Brick("collision", 4471, 652.25, 3216.9, 611),
+    new Brick("collision", 7786.5, 652.25, 3465, 611),
+
+    // Pipes
+    new Brick("collision", 1400, 550, 113, 110),
+    new Brick("collision", 1902, 500, 113, 180),
+    new Brick("collision", 2305, 450, 113, 210),
+    new Brick("collision", 2857, 450, 113, 210),
+    new Brick("collision", 8183, 550, 113, 110),
+    new Brick("collision", 8987, 550, 113, 110),
+];
 
 /**
  * Initializes some things before calling GameLoop or starting the main menu
  */
 function Main()
 {
-    window.setInterval("GameLoop()", 1000 / 60);
+    // window.setInterval("GameLoop()", 1000 / 60);
+    Game.StartInterval("GameLoop()", 60);
 
     // Game Setup
     Player.InitializeImageArray();
@@ -29,6 +46,8 @@ function Main()
     // Collision.InitializeCollisionMap("1_1_col_test");
     Sound.PlayMusic("1-1", true);
     player.SetSize("small"); // Just for Debugging!
+    // player.size == "small" ? player.SetSpawn(512, 611) : player.SetSpawn(512, 570);
+    player.SetSpawn(1300, 611); // TEST SPAWN
 
     AI.InitializeImageArray("goomba");
     enemies[0].SetSpawn(1125, 611);
@@ -128,43 +147,54 @@ function Main()
 function GameLoop()
 {
     Background.Draw();
-    // HUD.DrawHUD();
+    HUD.DrawHUD();
     Util.EndLevel(9970, new Audio("Assets/Sound/Global/StageClear.wav"));
+    
     player.Animate(player.size, player.animationStatus);
     enemies[0].Animate("moving"); // Temporary solution to animation
 
     // Test collision, before adding collsion map.
-    if(player.size == "small" && player.y >= 611 && i > 0)
-    {
-        isOnGround = true;
-        mirrorImage ? player.animationStatus = "idle_mirrored" : player.animationStatus = "idle";
-        player.y = 611;
-    }
+    // if(player.size == "small" && player.y >= 611 && i > 0)
+    // {
+    //     isOnGround = true;
+    //     mirrorImage ? player.animationStatus = "idle_mirrored" : player.animationStatus = "idle";
+    //     player.y = 611;
+    // }
 
-    else if(player.size == "large" && player.y >= 570 && i > 0)
-    {
-        isOnGround = true;
-        mirrorImage ? player.animationStatus = "idle_mirrored" : player.animationStatus = "idle";
-        player.y = 570;
-    }
+    // else if(player.size == "large" && player.y >= 570 && i > 0)
+    // {
+    //     isOnGround = true;
+    //     mirrorImage ? player.animationStatus = "idle_mirrored" : player.animationStatus = "idle";
+    //     player.y = 570;
+    // }
 
-    // Test AI Collision
-    for(let i = 0; i < enemies.length; i++)
-    {
-        if(player.x >= enemies[i].x - 30 && player.x <= (enemies[i].x + AI.GetImageArray("goomba")[0].width) + 3
-                && player.y >= enemies[i].y && player.y <= enemies[i].y + AI.GetImageArray("goomba")[0].height)
-            {
-                if(!isDead)
-                {
-                    player.Death();
-                    isDead = true;
-                    console.log("Player -> AI collision detected!");
-                }   
-            }
-    }
-    
+    // World Collision
+    blocks.forEach(block => {
+        block.SpawnBlock(); // Draw the blocks
+        if(player.collides(block))
+        {
+            isOnGround = true;
+        }
+    });
+
+
+    // AI Collision
+    // for(let i = 0; i < enemies.length; i++)
+    // {
+    //     if(player.size == "small" && player.x >= enemies[i].x - 30 && player.x <= (enemies[i].x + AI.GetImageArray("goomba")[0].width) + 3
+    //             && player.y >= enemies[i].y && player.y <= enemies[i].y + AI.GetImageArray("goomba")[0].height)
+    //         {
+    //             if(!isDead)
+    //             {
+    //                 player.Death();
+    //                 isDead = true;
+    //                 // console.log("Player -> AI collision detected!");
+    //             }   
+    //         }
+    // }
 
     // console.log(`Player Position: (${player.x}, ${player.y})`);
+
     // Animate the character sprites
     frameCounter++;
     if(frameCounter % 5 == 0) count++; // Increment the current image to draw every 5 frames

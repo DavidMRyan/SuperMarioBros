@@ -2,12 +2,14 @@
 
 class Collision
 {
+    // I wanted to use a collision map, but Web Browsers don't have a ton of support for retrieving 
+    // and manipulating image data, so I will just manually map all collision points for this level.
     /**
      * Returns the bytes from the specified file, for use in the collision map.
      * @param file - The file to get the bytes from
      */
-    static GetImageBytes(file)
-    {
+    // static GetImageBytes(file)
+    // {
         // let image = {width: document.getElementById(file).width, height: document.getElementById(file).height};
         // let rect = {x: 1, y: 1, width: image.width, height: image.height};
         // let image2 = c.getImageData(rect.x, rect.y, rect.width, rect.height);
@@ -16,11 +18,11 @@ class Collision
         // let biBitCount = imageData.getUint16(28, true);
         // let stride = Math.abs(Math.floor((biBitCount * biWidth + 31) / 32) * 4);
         // let stride = 1;
-        let result = [];
-        result[0] = [];
+        // let result = [];
+        // result[0] = [];
 
-        result[0][0] = 'rgba(' + data[0] + ', ' + data[1] + ', ' + data[2] + ', ' + (data[3] / 255) + ')';
-        console.log(result[0][0]);
+        // result[0][0] = 'rgba(' + data[0] + ', ' + data[1] + ', ' + data[2] + ', ' + (data[3] / 255) + ')';
+        // console.log(result[0][0]);
 
         // for(let col = 0; col < image.width; ++col)
         // {
@@ -39,7 +41,7 @@ class Collision
         // }
 
         // return result;
-    }
-
-    static InitializeCollisionMap(collisionMap) { Collision.GetImageBytes(collisionMap); }
+    // }
+    // 
+    // static InitializeCollisionMap(collisionMap) { Collision.GetImageBytes(collisionMap); }
 }

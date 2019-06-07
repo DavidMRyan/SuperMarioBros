@@ -10,6 +10,21 @@ class Player
         this.animationStatus = "idle";
         this.speed = 7;
         this.velocity = {x: 0.0, y: 0.0};
+        this.lives = 5;
+        this.width = 26;
+        this.height = 32;
+
+        this.left = this.x;
+        this.top = this.y;
+        this.bottom = this.y + this.height;
+        this.right = this.x + this.width;
+
+        this.collides = (value) => {
+             //    (value.X < Right) && (X < value.Right) 
+             // && (value.Y < Bottom) && (Y < value.Bottom);
+            return value.x <= this.right && this.x <= value.right
+                && value.y <= this.bottom && this.y <= value.bottom;
+        }
     }
 
     /**
@@ -30,7 +45,10 @@ class Player
 
 		// Initialize the Large Mario Images
 		for(let j = 0; j < largeMario.length; j++)
-			images[1][j] = largeMario[j];
+            images[1][j] = largeMario[j];
+            
+        // this.width = images[0][0].width;
+        // this.size == "small" ? this.height = images[0][0].height : this.height = images[1][0].height;
     }
 
     /**
@@ -90,26 +108,26 @@ class Player
             case "small": case 0:
                 switch(status)
                 {
+                    case "dead": player.Draw(document.getElementById("MarioDead"), false); break; 
                     case "idle": player.Draw(images[0][0], false); break;
                     case "moving": player.Draw(images[0][count], false); break;
                     case "jumping": player.Draw(images[0][3], false); break;
                     case "idle_mirrored": player.Draw(images[0][0], true); break;
                     case "moving_mirrored": player.Draw(images[0][count], true); break;
-                    case "jumping_mirrored": player.Draw(images[0][3], true); break;
-                    case "dead": player.Draw(document.getElementById("MarioDead"), false); break;            
+                    case "jumping_mirrored": player.Draw(images[0][3], true); break;           
                 }
                 break;
 
             case "large": case 1:
                 switch(status)
                 {
+                    case "dead": player.Draw(document.getElementById("MarioDead"), false); break;  
                     case "idle": player.Draw(images[1][0], false); break;
                     case "moving": player.Draw(images[1][count], false); break;    
                     case "jumping":player.Draw(images[1][3], false); break;
                     case "idle_mirrored": player.Draw(images[1][0], true); break;
                     case "moving_mirrored": player.Draw(images[1][count], true); break;
-                    case "jumping_mirrored": player.Draw(images[1][3], true); break;
-                    case "dead": player.Draw(document.getElementById("MarioDead"), false); break;   
+                    case "jumping_mirrored": player.Draw(images[1][3], true); break; 
                 }
                 break;
 
@@ -162,10 +180,26 @@ class Player
 
     Death()
     {
+        isDead = true;
+        this.lives--;
         player.animationStatus = "dead";
         Sound.StopMusic();
         Sound.PlayFX("Dead");
-        console.log("The player has died!");
+        Util.Sleep(3000).then(() => { 
+            Game.StopInterval();
+            GameOver.SplashScreen();
+
+            if(player.lives > 0)
+            {
+                Util.Sleep(2000).then(() => {
+                    player.animationStatus = "idle";
+                    player.size == "small" ? player.SetSpawn(512, 611) : player.SetSpawn(512, 570);
+                    isDead = false;
+                    Main();
+                });
+            }
+        });
+        // console.log("The player has died!");
     }
 
     /**
