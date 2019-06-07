@@ -154,28 +154,43 @@ function GameLoop()
     enemies[0].Animate("moving"); // Temporary solution to animation
 
     // Test collision, before adding collsion map.
-    // if(player.size == "small" && player.y >= 611 && i > 0)
-    // {
-    //     isOnGround = true;
-    //     mirrorImage ? player.animationStatus = "idle_mirrored" : player.animationStatus = "idle";
-    //     player.y = 611;
-    // }
+    if(player.size == "small" && player.y >= 611 && i > 0)
+    {
+        isOnGround = true;
+        mirrorImage ? player.animationStatus = "idle_mirrored" : player.animationStatus = "idle";
+        player.y = 611;
+    }
 
-    // else if(player.size == "large" && player.y >= 570 && i > 0)
-    // {
-    //     isOnGround = true;
-    //     mirrorImage ? player.animationStatus = "idle_mirrored" : player.animationStatus = "idle";
-    //     player.y = 570;
-    // }
+    else if(player.size == "large" && player.y >= 570 && i > 0)
+    {
+        isOnGround = true;
+        mirrorImage ? player.animationStatus = "idle_mirrored" : player.animationStatus = "idle";
+        player.y = 570;
+    }
 
     // World Collision
     blocks.forEach(block => {
-        block.SpawnBlock(); // Draw the blocks
-        if(player.collides(block))
+        // block.SpawnBlock(); // Draw the blocks
+        // if(player.collides(block))
+        // {
+        //     isOnGround = true;
+        // }
+        if(player.size == "small" && player.y >= blocks[4].y && i > 0)
         {
             isOnGround = true;
+            mirrorImage ? player.animationStatus = "idle_mirrored" : player.animationStatus = "idle";
+            player.y = blocks[4].y - player.height - 7;
+        }
+
+        else if(player.size == "large" && player.y >= blocks[4].y && i > 0)
+        {
+            isOnGround = true;
+            mirrorImage ? player.animationStatus = "idle_mirrored" : player.animationStatus = "idle";
+            player.y = blocks[4].y;
         }
     });
+
+    player.collides(blocks[4]);
 
 
     // AI Collision

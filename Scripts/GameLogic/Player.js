@@ -20,8 +20,7 @@ class Player
         this.right = this.x + this.width;
 
         this.collides = (value) => {
-             //    (value.X < Right) && (X < value.Right) 
-             // && (value.Y < Bottom) && (Y < value.Bottom);
+            // console.log(value.x + " " + this.right);
             return value.x <= this.right && this.x <= value.right
                 && value.y <= this.bottom && this.y <= value.bottom;
         }
@@ -144,8 +143,21 @@ class Player
     {
         switch(direction)
         {
-            case "LEFT":    this.x -= this.speed;   break;
-            case "RIGHT":   this.x += this.speed;   break;
+            case "LEFT": 
+                this.x -= this.speed;
+                this.left = this.x;
+                this.top = this.y;
+                this.bottom = this.y + this.height;
+                this.right = this.x + this.width;
+                break;
+
+            case "RIGHT": 
+                this.x += this.speed;
+                this.left = this.x;
+                this.top = this.y;
+                this.bottom = this.y + this.height;
+                this.right = this.x + this.width;
+                break;
         }
     }
 
