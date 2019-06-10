@@ -117,7 +117,7 @@ function Main()
 
         if(keyMap[SPACE])
         {
-            if(!isFalling && !isDead)
+            if(/*!isFalling &&*/ !isDead)
             {
                 isOnGround = false;
                 player.velocity.y = -14.0;

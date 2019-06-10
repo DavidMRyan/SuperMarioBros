@@ -187,7 +187,7 @@ class Player
         isJumping = true;
         setTimeout(() => {
             if(i >= 100) { i = 0; return; }
-            if(/*!isFalling &&*/ i > 0)
+            if(!isFalling && i > 0)
             {
                 this.velocity.y = 0;
                 i = 0;

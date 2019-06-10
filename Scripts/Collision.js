@@ -90,7 +90,7 @@ class Collision
         {  
             isFalling = true;
             isOnGround = false;
-            player.y += 4;
+            // player.y += 4;
         }
         console.log(`Any Intersection: ${anyIntersection}\nisOnGround: ${isOnGround}\nisFalling: ${isFalling}`);
     }
