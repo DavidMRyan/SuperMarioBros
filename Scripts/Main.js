@@ -39,11 +39,12 @@ function Main()
     Game.StartInterval("GameLoop()", 60);
 
     // Game Setup
+    alreadyDead = false;
+    player.size == "small" ? player.SetSpawn(512, 611) : player.SetSpawn(512, 570);
     Player.InitializeImageArray();
     AI.InitializeAIArray(14);
     Sound.PlayMusic("1-1", true);
     player.SetSize("small");
-    player.size == "small" ? player.SetSpawn(512, 611) : player.SetSpawn(512, 570);
 
     AI.InitializeImageArray("goomba");
     enemies[0].SetSpawn(1125, 611);
@@ -151,22 +152,21 @@ function GameLoop()
 
     // World Collision
     Collision.HandlePlayerCollision();
-    if(player.bottom >= canvas.height) player.Death();
 
     // AI Collision
-    for(let i = 0; i < enemies.length; i++)
-    {
-        if(player.size == "small" && player.x >= enemies[i].x - 30 && player.x <= (enemies[i].x + AI.GetImageArray("goomba")[0].width) + 3
-                && player.y >= enemies[i].y && player.y <= enemies[i].y + AI.GetImageArray("goomba")[0].height)
-            {
-                if(!isDead)
-                {
-                    player.Death();
-                    isDead = true;
-                    // console.log("Player -> AI collision detected!");
-                }   
-            }
-    }
+    // for(let i = 0; i < enemies.length; i++)
+    // {
+    //     if(player.size == "small" && player.x >= enemies[i].x - 30 && player.x <= (enemies[i].x + AI.GetImageArray("goomba")[0].width) + 3
+    //             && player.y >= enemies[i].y && player.y <= enemies[i].y + AI.GetImageArray("goomba")[0].height)
+    //         {
+    //             if(!isDead)
+    //             {
+    //                 player.Death();
+    //                 isDead = true;
+    //                 // console.log("Player -> AI collision detected!");
+    //             }   
+    //         }
+    // }
 
     // Update Player Information
     player.left = player.x;

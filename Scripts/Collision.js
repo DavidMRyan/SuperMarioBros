@@ -1,4 +1,5 @@
 // var data;
+var alreadyDead = false;
 
 class Collision
 {
@@ -90,6 +91,17 @@ class Collision
             isFalling = true;
             isOnGround = false;
         }
-        console.log(`Any Intersection: ${anyIntersection}\nisOnGround: ${isOnGround}\nisFalling: ${isFalling}`);
+
+        // Handle if the player falls into a hole
+        // WIP!!
+        // ######################################
+        if(!alreadyDead && player.bottom >= canvas.height) 
+        { 
+            alreadyDead = true;
+            player.bottom = blocks[0].top - 3;
+            player.Death();
+            console.log(player.lives);
+        }
+        // console.log(`Any Intersection: ${anyIntersection}\nisOnGround: ${isOnGround}\nisFalling: ${isFalling}`);
     }
 }
