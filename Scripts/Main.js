@@ -10,7 +10,7 @@ var Game = new Interval();
 var player = new Player(), count = 4, frameCounter = 0,
     isIdle = true, mirrorImage = false,
     isJumping = false, isFalling = false,
-    isOnGround = true, isDead = false;
+    isOnGround = true, isDead = false, canJump = true;
 var enemies = [], enemyImages = [], enemyCount = 0;
 var canvasMatrix = matrixIdentity;
 var keyMap = [], sounds = [];
@@ -112,8 +112,9 @@ function Main()
 
         if(keyMap[SPACE])
         {
-            if(!isDead)
+            if(canJump && !isJumping && !isDead)
             {
+                canJump = false;
                 isOnGround = false;
                 player.velocity.y = -14.0;
                 player.size == "small" ? Sound.PlayFX("Jump_Small") : Sound.PlayFX("Jump_Large");
@@ -133,7 +134,7 @@ function Main()
             isIdle = true;
             if(isOnGround)
                 mirrorImage ? player.animationStatus = "idle_mirrored" : player.animationStatus = "idle";
-        } 
+        }
     });
 }
 
@@ -150,6 +151,7 @@ function GameLoop()
 
     // World Collision
     Collision.HandlePlayerCollision();
+    if(player.bottom >= canvas.height) player.Death();
 
     // AI Collision
     for(let i = 0; i < enemies.length; i++)

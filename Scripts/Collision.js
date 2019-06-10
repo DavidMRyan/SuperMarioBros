@@ -77,6 +77,7 @@ class Collision
         if(anyIsStuck) player.y -= 2;
         if(anyIntersection)
         {
+            canJump = true;
             isFalling = false;
             isOnGround = true;
             mirrorImage ? player.animationStatus = "idle_mirrored" : player.animationStatus = "idle";
