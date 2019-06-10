@@ -18,7 +18,7 @@ class GameOver
 
         c.fillStyle = "black";
         c.fillRect(-canvasMatrix.dx, canvasMatrix.dy, canvas.width, canvas.height);
-        c.font = "24pt Press Start";
+        c.font = "24pt Arial";
         c.fillStyle = "white";
     
         if(player.lives > 0) 
@@ -49,7 +49,7 @@ class GameOver
         c.fillStyle = "rgb(0, 0, 0)";
         c.fillRect(0, 0, canvas.width, canvas.height);
         c.fillStyle = "rgb(255, 255, 255)";
-        c.font = "24pt Press Start";
+        c.font = "24pt Arial";
         c.fillText("Thanks for Playing!", canvas.width / 2 - 170, canvas.height / 2);
         c.closePath();
     }

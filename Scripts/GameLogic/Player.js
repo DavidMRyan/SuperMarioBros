@@ -19,11 +19,28 @@ class Player
         this.bottom = this.y + this.height;
         this.right = this.x + this.width;
 
-        this.collides = (value) => {
+        this.intersects = (value) => {
             // console.log(value.x + " " + this.right);
             return value.x <= this.right && this.x <= value.right
-                && value.y <= this.bottom && this.y <= value.bottom;
+                && value.y <= this.bottom + 7 && this.y <= value.bottom;
         }
+
+        this.intersects2 = (value) => {
+            return this.x < value.x + value.getWidth() &&
+                this.x + this.getWidth() > value.x &&
+                this.y < value.y + value.getHeight() &&
+                this.getHeight() + this.y > value.y;
+        }
+ 
+        this.isStuck = (value) => {
+            return this.x < value.x + value.getWidth() &&
+                this.x + this.getWidth() > value.x &&
+                this.y + 1 < value.y + value.getHeight() &&
+                this.getHeight() + this.y + 1 > value.y;
+        }
+
+        this.getHeight = () => { return this.bottom - this.top; }
+        this.getWidth = () => { return this.right - this.left; }
     }
 
     /**
@@ -143,7 +160,7 @@ class Player
     {
         switch(direction)
         {
-            case "LEFT": 
+            case "LEFT":
                 this.x -= this.speed;
                 this.left = this.x;
                 this.top = this.y;
@@ -170,7 +187,7 @@ class Player
         isJumping = true;
         setTimeout(() => {
             if(i >= 100) { i = 0; return; }
-            if(isOnGround && i > 0)
+            if(/*!isFalling &&*/ i > 0)
             {
                 this.velocity.y = 0;
                 i = 0;
@@ -183,6 +200,7 @@ class Player
                 this.y += this.velocity.y;
                 // console.log(`Velocity(${this.velocity.x}, ${this.velocity.y})`); // Debug velocity
             }
+
             player.Jump();
             i++;
         }, 10);

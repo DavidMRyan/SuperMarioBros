@@ -44,4 +44,54 @@ class Collision
     // }
     // 
     // static InitializeCollisionMap(collisionMap) { Collision.GetImageBytes(collisionMap); }
+
+    static HandlePlayerCollision()
+    {
+        let anyIntersection = false;
+        let anyIsStuck = false;
+        let indexInter = 0;
+        let indexStuck = 0;
+ 
+        for(let block = 0; block < blocks.length; block++)
+        {
+            // blocks[block].SpawnBlock();
+ 
+            if(player.intersects2(blocks[block]))
+            {
+                anyIntersection = true;
+                indexInter = block;
+                break;
+            }
+        }
+ 
+        for(let block = 0; block < blocks.length; block++)
+        {
+            // blocks[block].SpawnBlock();
+ 
+            if(player.isStuck(blocks[block]))
+            {
+                anyIsStuck = true;
+                indexStuck = block;
+                break;
+            }
+        }
+ 
+        if(anyIsStuck) player.y -= 1;
+        if(anyIntersection)
+        {
+            isFalling = false;
+            isOnGround = true;
+            mirrorImage ? player.animationStatus = "idle_mirrored" : player.animationStatus = "idle";
+            player.velocity.y = 0;
+            player.bottom = blocks[indexInter].y;
+        }
+ 
+        else if (true)
+        {  
+            isFalling = true;
+            isOnGround = false;
+            player.y += 4;
+        }
+        console.log(`Any Intersection: ${anyIntersection}\nisOnGround: ${isOnGround}\nisFalling: ${isFalling}`);
+    }
 }

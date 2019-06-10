@@ -17,7 +17,7 @@ class HUD
         c.setTransform(mat.m11, mat.m12, mat.m21, mat.m22, mat.dx, mat.dy);
 
         c.fillStyle = "white";
-        c.font = "24pt Press Start";
+        c.font = "24pt Arial";
         c.fillText("MARIO", -(canvasMatrix.dx - 50), canvasMatrix.dy + 50); // 50, 50
         c.fillText("x00", -(canvasMatrix.dx - 350), canvasMatrix.dy + 50); // 350, 50
         c.fillText("WORLD 1-1", -(canvasMatrix.dx - 550), canvasMatrix.dy + 50); // 550, 50

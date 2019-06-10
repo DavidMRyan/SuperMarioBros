@@ -20,6 +20,9 @@ class Brick
         this.top = this.y;
         this.right = this.x + this.width;
         this.bottom = this.y + this.height;
+
+        this.getHeight = () => { return this.bottom - this.top; }
+        this.getWidth = () => { return this.right - this.left; }
     }
 
     SpawnBlock()

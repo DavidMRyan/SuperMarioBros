@@ -35,7 +35,7 @@ function DrawMainMenu()
         Background.Draw();
         
         c.fillStyle = "white";
-        c.font = "24pt Press Start";
+        c.font = "24pt Arial";
         c.drawImage(logo, (canvas.width / 2) - (logo.width / 2), 75, logo.width, logo.height);
         c.fillText("By David Ryan", 525, 350);
         c.fillText("Press [Enter] To Begin!", (canvas.width / 2) - 185, 550);

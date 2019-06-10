@@ -10,7 +10,8 @@
 var Game = new Interval();
 var player = new Player(), count = 4, frameCounter = 0,
     isIdle = true, mirrorImage = false,
-    isJumping = false, isOnGround = true, isDead = false;
+    isJumping = false, isFalling = false,
+    isOnGround = true, isDead = false;
 var enemies = [], enemyImages = [], enemyCount = 0;
 var canvasMatrix = matrixIdentity;
 var keyMap = [], sounds = [];
@@ -116,12 +117,12 @@ function Main()
 
         if(keyMap[SPACE])
         {
-            if(isOnGround && !isDead)
+            if(!isFalling && !isDead)
             {
+                isOnGround = false;
                 player.velocity.y = -14.0;
                 player.size == "small" ? Sound.PlayFX("Jump_Small") : Sound.PlayFX("Jump_Large");
                 player.Jump();
-                isOnGround = false;
                 mirrorImage ? player.animationStatus = "jumping_mirrored" : player.animationStatus = "jumping";
             }
         }
@@ -149,49 +150,26 @@ function GameLoop()
     Background.Draw();
     HUD.DrawHUD();
     Util.EndLevel(9970, new Audio("Assets/Sound/Global/StageClear.wav"));
-    
     player.Animate(player.size, player.animationStatus);
     enemies[0].Animate("moving"); // Temporary solution to animation
 
     // Test collision, before adding collsion map.
-    if(player.size == "small" && player.y >= 611 && i > 0)
-    {
-        isOnGround = true;
-        mirrorImage ? player.animationStatus = "idle_mirrored" : player.animationStatus = "idle";
-        player.y = 611;
-    }
+    // if(player.size == "small" && player.y >= 611 && i > 0)
+    // {
+    //     isOnGround = true;
+    //     mirrorImage ? player.animationStatus = "idle_mirrored" : player.animationStatus = "idle";
+    //     player.y = 611;
+    // }
 
-    else if(player.size == "large" && player.y >= 570 && i > 0)
-    {
-        isOnGround = true;
-        mirrorImage ? player.animationStatus = "idle_mirrored" : player.animationStatus = "idle";
-        player.y = 570;
-    }
+    // else if(player.size == "large" && player.y >= 570 && i > 0)
+    // {
+    //     isOnGround = true;
+    //     mirrorImage ? player.animationStatus = "idle_mirrored" : player.animationStatus = "idle";
+    //     player.y = 570;
+    // }
 
     // World Collision
-    blocks.forEach(block => {
-        // block.SpawnBlock(); // Draw the blocks
-        // if(player.collides(block))
-        // {
-        //     isOnGround = true;
-        // }
-        if(player.size == "small" && player.y >= blocks[4].y && i > 0)
-        {
-            isOnGround = true;
-            mirrorImage ? player.animationStatus = "idle_mirrored" : player.animationStatus = "idle";
-            player.y = blocks[4].y - player.height - 7;
-        }
-
-        else if(player.size == "large" && player.y >= blocks[4].y && i > 0)
-        {
-            isOnGround = true;
-            mirrorImage ? player.animationStatus = "idle_mirrored" : player.animationStatus = "idle";
-            player.y = blocks[4].y;
-        }
-    });
-
-    player.collides(blocks[4]);
-
+    Collision.HandlePlayerCollision();
 
     // AI Collision
     // for(let i = 0; i < enemies.length; i++)
@@ -209,6 +187,12 @@ function GameLoop()
     // }
 
     // console.log(`Player Position: (${player.x}, ${player.y})`);
+
+    // Update Player Information
+    player.left = player.x;
+    player.top = player.y;
+    player.bottom = player.y + player.height;
+    player.right = player.x + player.width;
 
     // Animate the character sprites
     frameCounter++;
