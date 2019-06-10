@@ -65,9 +65,7 @@ class Collision
         }
  
         for(let block = 0; block < blocks.length; block++)
-        {
-            // blocks[block].SpawnBlock();
- 
+        { 
             if(player.isStuck(blocks[block]))
             {
                 anyIsStuck = true;
@@ -76,7 +74,7 @@ class Collision
             }
         }
  
-        if(anyIsStuck) player.y -= 1;
+        if(anyIsStuck) player.y -= 2;
         if(anyIntersection)
         {
             isFalling = false;
@@ -90,7 +88,6 @@ class Collision
         {  
             isFalling = true;
             isOnGround = false;
-            // player.y += 4;
         }
         console.log(`Any Intersection: ${anyIntersection}\nisOnGround: ${isOnGround}\nisFalling: ${isFalling}`);
     }

@@ -62,9 +62,6 @@ class Player
 		// Initialize the Large Mario Images
 		for(let j = 0; j < largeMario.length; j++)
             images[1][j] = largeMario[j];
-            
-        // this.width = images[0][0].width;
-        // this.size == "small" ? this.height = images[0][0].height : this.height = images[1][0].height;
     }
 
     /**
